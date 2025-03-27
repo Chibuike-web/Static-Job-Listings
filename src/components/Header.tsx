@@ -35,4 +35,5 @@ const Nav = styled.nav`
 	background-color: var(--DesaturatedDarkCyan);
 	display: flex;
 	justify-content: center;
+	margin-block-end: 74px;
 `;

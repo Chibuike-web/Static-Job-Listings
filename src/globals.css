@@ -6,10 +6,11 @@
 
 :root {
 	--DesaturatedDarkCyan: hsl(180, 29%, 50%);
-	--LightGrayishCyan: hsl(180, 52%, 96%);
-	--LightGrayishCyan: hsl(180, 31%, 95%);
+	--LightGrayishCyan1: hsl(180, 52%, 96%); /* Background */
+	--LightGrayishCyan2: hsl(180, 31%, 95%); /* Filter Tablets */
 	--DarkGrayishCyan: hsl(180, 8%, 52%);
 	--VeryDarkGrayishCyan: hsl(180, 14%, 20%);
+	--box-shadow: 0 2px 24px hsla(180, 29%, 50%, 0.25);
 }
 
 a {

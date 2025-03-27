@@ -10,46 +10,56 @@ function App() {
 	return (
 		<Container>
 			<Header />
-			{jobs.map(
-				({
-					id,
-					company,
-					logo,
-					new: isNew,
-					featured,
-					position,
-					role,
-					level,
-					postedAt,
-					contract,
-					location,
-					languages,
-					tools,
-				}: JobType) => (
-					<Joblist
-						key={id}
-						id={id}
-						company={company}
-						logo={logo}
-						new={isNew}
-						featured={featured}
-						position={position}
-						role={role}
-						level={level}
-						postedAt={postedAt}
-						contract={contract}
-						location={location}
-						languages={languages}
-						tools={tools}
-					/>
-				)
-			)}
+			<Section>
+				{jobs.map(
+					({
+						id,
+						company,
+						logo,
+						new: isNew,
+						featured,
+						position,
+						role,
+						level,
+						postedAt,
+						contract,
+						location,
+						languages,
+						tools,
+					}: JobType) => (
+						<Joblist
+							key={id}
+							id={id}
+							company={company}
+							logo={logo}
+							new={isNew}
+							featured={featured}
+							position={position}
+							role={role}
+							level={level}
+							postedAt={postedAt}
+							contract={contract}
+							location={location}
+							languages={languages}
+							tools={tools}
+						/>
+					)
+				)}
+			</Section>
 		</Container>
 	);
 }
 
 const Container = styled.div`
-	background-color: var(--LightGrayishCyan) s;
+	background-color: var(--LightGrayishCyan1);
 `;
 
+const Section = styled.section`
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	margin-inline: auto;
+	width: 100%;
+	max-inline-size: 1110px;
+`;
 export default App;
