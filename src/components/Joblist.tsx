@@ -23,15 +23,17 @@ export default function Joblist({
 				<Aside>
 					<header>
 						<h2>{company}</h2>
-						<p>
-							{isNew && <span>NEW!</span>}
-							{featured && <span>FEATURED</span>}
-						</p>
+						<BadgesContainer>
+							{isNew && <BadgeNew>NEW!</BadgeNew>}
+							{featured && <BadgeFeatured>FEATURED</BadgeFeatured>}
+						</BadgesContainer>
 					</header>
 					<h3>{position}</h3>
-					<p>
-						<span>{postedAt}</span> • <span>{contract}</span> • <span>{location}</span>
-					</p>
+					<InfoText>
+						<span>{postedAt}</span>
+						<span>{contract}</span>
+						<span>{location}</span>
+					</InfoText>
 				</Aside>
 			</MainContent>
 
@@ -57,11 +59,10 @@ export default function Joblist({
 	);
 }
 
-// Styled Components
 const Article = styled.article`
 	background-color: white;
 	padding: 1.5rem;
-	border-radius: 8px;
+	border-radius: 0.5rem;
 	box-shadow: var(--box-shadow);
 	display: flex;
 	align-items: center;
@@ -82,54 +83,58 @@ const Aside = styled.aside`
 	header {
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: 0.5rem;
 
 		h2 {
-			font-size: 18px;
+			font-size: 1.125rem;
 			font-weight: 700;
 			color: var(--DesaturatedDarkCyan);
-		}
-
-		p {
-			display: flex;
-			gap: 8px;
-			align-items: center;
-
-			span:first-of-type {
-				background-color: var(--DesaturatedDarkCyan);
-				color: white;
-				padding: 6px 8px;
-				border-radius: 1000px;
-				font-size: 14px;
-				font-weight: 500;
-			}
-
-			span:last-of-type {
-				background-color: var(--VeryDarkGrayishCyan);
-				color: white;
-				padding: 6px 8px;
-				border-radius: 1000px;
-				font-size: 14px;
-				font-weight: 500;
-			}
 		}
 	}
 
 	h3 {
-		font-size: 20px;
+		font-size: 1.25rem;
 		&:hover {
 			color: var(--DesaturatedDarkCyan);
 			cursor: pointer;
 		}
 	}
-	p {
+`;
+
+const InfoText = styled.p`
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	font-weight: 500;
+	font-size: 1rem;
+	color: var(--DarkGrayishCyan);
+
+	span:not(:first-child)::before {
+		content: "•";
+		margin-right: 0.5rem;
 		color: var(--DarkGrayishCyan);
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		font-weight: 500;
-		font-size: 16px;
 	}
+`;
+
+const BadgesContainer = styled.p`
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+`;
+
+const BadgeNew = styled.span`
+	background-color: var(--DesaturatedDarkCyan);
+	color: white;
+	padding: 0.375rem 0.5rem;
+	border-radius: 62.5rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	display: inline-block;
+	text-transform: uppercase;
+`;
+
+const BadgeFeatured = styled(BadgeNew)`
+	background-color: var(--VeryDarkGrayishCyan);
 `;
 
 const ListContainer = styled.ul`
@@ -144,9 +149,9 @@ const ListButton = styled.button`
 	background: var(--LightGrayishCyan2);
 	color: var(--DesaturatedDarkCyan);
 	padding: 0.5rem 1rem;
-	border-radius: 4px;
+	border-radius: 0.25rem;
 	font-weight: 700;
-	font-size: 15px;
+	font-size: 0.9375rem;
 	font-family: "League Spartan";
 	cursor: pointer;
 	transition: all 0.3s;

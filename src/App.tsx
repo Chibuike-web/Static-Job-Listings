@@ -52,6 +52,7 @@ function App() {
 
 const Container = styled.div`
 	background-color: var(--LightGrayishCyan1);
+	min-height: 100svh;
 `;
 
 const Section = styled.section`
