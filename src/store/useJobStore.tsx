@@ -5,7 +5,7 @@ export interface JobType {
 	id: number;
 	company: string;
 	logo: string;
-	new: boolean;
+	isNew: boolean;
 	featured: boolean;
 	position: string;
 	role: "Frontend" | "Backend" | "Fullstack";

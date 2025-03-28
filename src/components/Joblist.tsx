@@ -2,14 +2,13 @@ import styled from "styled-components";
 import { JobType } from "../store/useJobStore";
 
 interface JobProps extends JobType {
-	handleClick: (role: string, level: string, tools: string[], languages: string[]) => void;
+	handleClick: (filterType: "role" | "level" | "tool" | "language", value: string) => void;
 }
 
 export default function Joblist({
-	id,
 	company,
 	logo,
-	new: isNew,
+	isNew,
 	featured,
 	position,
 	role,
@@ -24,7 +23,7 @@ export default function Joblist({
 	return (
 		<Wrapper>
 			<ImageMobile src={logo} alt={`${company} logo`} />
-			<Article isNew={isNew} featured={featured}>
+			<Article $isNew={isNew} $featured={featured}>
 				<MainContent>
 					<ImageDesktop src={logo} alt={`${company} logo`} />
 					<Aside>
@@ -46,21 +45,27 @@ export default function Joblist({
 
 				<ListContainer>
 					<li>
-						<ListButton type="button" onClick={() => handleClick(role, level, tools, languages)}>
+						<ListButton type="button" onClick={() => handleClick("role", role)}>
 							{role}
 						</ListButton>
 					</li>
 					<li>
-						<ListButton type="button">{level}</ListButton>
+						<ListButton type="button" onClick={() => handleClick("level", level)}>
+							{level}
+						</ListButton>
 					</li>
 					{languages.map((language, index) => (
 						<li key={index}>
-							<ListButton type="button">{language}</ListButton>
+							<ListButton type="button" onClick={() => handleClick("language", language)}>
+								{language}
+							</ListButton>
 						</li>
 					))}
 					{tools.map((tool, index) => (
 						<li key={index}>
-							<ListButton type="button">{tool}</ListButton>
+							<ListButton type="button" onClick={() => handleClick("tool", tool)}>
+								{tool}
+							</ListButton>
 						</li>
 					))}
 				</ListContainer>
@@ -72,10 +77,10 @@ export default function Joblist({
 const Wrapper = styled.div`
 	position: relative;
 	background-color: white;
-	overflow: visible; /* Allow the image to extend outside */
+	overflow: visible;
 `;
 
-const Article = styled.article<{ isNew: boolean; featured: boolean }>`
+const Article = styled.article<{ $isNew?: boolean; $featured?: boolean }>`
 	padding: 2rem;
 	border-radius: 0.5rem;
 	box-shadow: var(--box-shadow);
@@ -92,7 +97,8 @@ const Article = styled.article<{ isNew: boolean; featured: boolean }>`
 		top: 0;
 		bottom: 0;
 		width: 5px;
-		background-color: ${({ isNew, featured }) => isNew && featured && "var(--DesaturatedDarkCyan)"};
+		background-color: ${({ $isNew, $featured }) =>
+			$isNew && $featured && "var(--DesaturatedDarkCyan)"};
 	}
 
 	@media (max-width: 900px) {

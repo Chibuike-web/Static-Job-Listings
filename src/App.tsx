@@ -7,22 +7,12 @@ import styled from "styled-components";
 
 function App() {
 	const { jobs, setJobs } = useJobStore();
-	const handleClick = (
-		jobRole: string,
-		jobLevel: string,
-		jobTool: string[],
-		jobLanguage: string[]
-	) => {
+	const handleClick = (filterType: "role" | "level" | "tool" | "language", value: string) => {
 		const newJobLists = jobs.filter((job) => {
-			if (
-				job.role === jobRole ||
-				job.level === jobLevel ||
-				job.tools === jobTool ||
-				job.languages === jobLanguage
-			) {
-				return true;
-			}
-
+			if (filterType === "role") return job.role === value;
+			if (filterType === "level") return job.level === value;
+			if (filterType === "tool") return job.tools?.includes(value);
+			if (filterType === "language") return job.languages?.includes(value);
 			return false;
 		});
 
@@ -38,7 +28,7 @@ function App() {
 						id,
 						company,
 						logo,
-						new: isNew,
+						isNew,
 						featured,
 						position,
 						role,
@@ -54,7 +44,7 @@ function App() {
 							id={id}
 							company={company}
 							logo={logo}
-							new={isNew}
+							isNew={isNew}
 							featured={featured}
 							position={position}
 							role={role}
