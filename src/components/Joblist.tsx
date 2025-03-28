@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { JobType } from "../store/useJobStore";
 
+interface JobProps extends JobType {
+	handleClick: (role: string, level: string, tools: string[], languages: string[]) => void;
+}
+
 export default function Joblist({
 	id,
 	company,
@@ -15,58 +19,88 @@ export default function Joblist({
 	location,
 	languages,
 	tools,
-}: JobType) {
+	handleClick,
+}: JobProps) {
 	return (
-		<Article>
-			<MainContent>
-				<img src={logo} alt={`${company} logo`} />
-				<Aside>
-					<header>
-						<h2>{company}</h2>
-						<BadgesContainer>
-							{isNew && <BadgeNew>NEW!</BadgeNew>}
-							{featured && <BadgeFeatured>FEATURED</BadgeFeatured>}
-						</BadgesContainer>
-					</header>
-					<h3>{position}</h3>
-					<InfoText>
-						<span>{postedAt}</span>
-						<span>{contract}</span>
-						<span>{location}</span>
-					</InfoText>
-				</Aside>
-			</MainContent>
+		<Wrapper>
+			<ImageMobile src={logo} alt={`${company} logo`} />
+			<Article isNew={isNew} featured={featured}>
+				<MainContent>
+					<ImageDesktop src={logo} alt={`${company} logo`} />
+					<Aside>
+						<Header>
+							<h2>{company}</h2>
+							<BadgesContainer>
+								{isNew && <BadgeNew>NEW!</BadgeNew>}
+								{featured && <BadgeFeatured>FEATURED</BadgeFeatured>}
+							</BadgesContainer>
+						</Header>
+						<h3>{position}</h3>
+						<InfoText>
+							<span>{postedAt}</span>
+							<span>{contract}</span>
+							<span>{location}</span>
+						</InfoText>
+					</Aside>
+				</MainContent>
 
-			<ListContainer>
-				<li>
-					<ListButton type="button">{role}</ListButton>
-				</li>
-				<li>
-					<ListButton type="button">{level}</ListButton>
-				</li>
-				{languages.map((language, index) => (
-					<li key={index}>
-						<ListButton type="button">{language}</ListButton>
+				<ListContainer>
+					<li>
+						<ListButton type="button" onClick={() => handleClick(role, level, tools, languages)}>
+							{role}
+						</ListButton>
 					</li>
-				))}
-				{tools.map((tool, index) => (
-					<li key={index}>
-						<ListButton type="button">{tool}</ListButton>
+					<li>
+						<ListButton type="button">{level}</ListButton>
 					</li>
-				))}
-			</ListContainer>
-		</Article>
+					{languages.map((language, index) => (
+						<li key={index}>
+							<ListButton type="button">{language}</ListButton>
+						</li>
+					))}
+					{tools.map((tool, index) => (
+						<li key={index}>
+							<ListButton type="button">{tool}</ListButton>
+						</li>
+					))}
+				</ListContainer>
+			</Article>
+		</Wrapper>
 	);
 }
 
-const Article = styled.article`
+const Wrapper = styled.div`
+	position: relative;
 	background-color: white;
-	padding: 1.5rem;
+	overflow: visible; /* Allow the image to extend outside */
+`;
+
+const Article = styled.article<{ isNew: boolean; featured: boolean }>`
+	padding: 2rem;
 	border-radius: 0.5rem;
 	box-shadow: var(--box-shadow);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	position: relative;
+	overflow: hidden;
+
+	&::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 5px;
+		background-color: ${({ isNew, featured }) => isNew && featured && "var(--DesaturatedDarkCyan)"};
+	}
+
+	@media (max-width: 900px) {
+		flex-direction: column;
+		align-items: start;
+		gap: 32px;
+		padding: 2.2rem 1.5rem;
+	}
 `;
 
 const MainContent = styled.section`
@@ -75,22 +109,30 @@ const MainContent = styled.section`
 	gap: 1.5rem;
 `;
 
+const ImageDesktop = styled.img`
+	@media (max-width: 900px) {
+		display: none;
+	}
+`;
+
+const ImageMobile = styled.img`
+	display: none;
+	@media (max-width: 900px) {
+		display: block;
+		position: absolute;
+		width: 100%;
+		max-width: 48px;
+		flex-shrink: 0;
+		top: 0;
+		left: 1.5rem;
+		transform: translateY(-50%);
+	}
+`;
+
 const Aside = styled.aside`
 	display: flex;
 	flex-direction: column;
 	gap: 0.6rem;
-
-	header {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-
-		h2 {
-			font-size: 1.125rem;
-			font-weight: 700;
-			color: var(--DesaturatedDarkCyan);
-		}
-	}
 
 	h3 {
 		font-size: 1.25rem;
@@ -98,6 +140,18 @@ const Aside = styled.aside`
 			color: var(--DesaturatedDarkCyan);
 			cursor: pointer;
 		}
+	}
+`;
+
+const Header = styled.header`
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+
+	h2 {
+		font-size: 1.125rem;
+		font-weight: 700;
+		color: var(--DesaturatedDarkCyan);
 	}
 `;
 
@@ -159,5 +213,22 @@ const ListButton = styled.button`
 	&:hover {
 		background-color: var(--DesaturatedDarkCyan);
 		color: white;
+	}
+
+	&:focus {
+		background-color: var(--DesaturatedDarkCyan);
+		color: white;
+	}
+
+	@media (max-width: 768px) {
+		cursor: initial;
+		&:hover {
+			background-color: var(--LightGrayishCyan2);
+			color: var(--DesaturatedDarkCyan);
+		}
+		&:focus {
+			background-color: var(--DesaturatedDarkCyan);
+			color: white;
+		}
 	}
 `;

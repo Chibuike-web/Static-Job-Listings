@@ -6,7 +6,29 @@ import { JobType } from "./store/useJobStore";
 import styled from "styled-components";
 
 function App() {
-	const { jobs } = useJobStore();
+	const { jobs, setJobs } = useJobStore();
+	const handleClick = (
+		jobRole: string,
+		jobLevel: string,
+		jobTool: string[],
+		jobLanguage: string[]
+	) => {
+		const newJobLists = jobs.filter((job) => {
+			if (
+				job.role === jobRole ||
+				job.level === jobLevel ||
+				job.tools === jobTool ||
+				job.languages === jobLanguage
+			) {
+				return true;
+			}
+
+			return false;
+		});
+
+		setJobs(newJobLists);
+	};
+
 	return (
 		<Container>
 			<Header />
@@ -42,6 +64,7 @@ function App() {
 							location={location}
 							languages={languages}
 							tools={tools}
+							handleClick={handleClick}
 						/>
 					)
 				)}
@@ -58,9 +81,14 @@ const Container = styled.div`
 const Section = styled.section`
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+	gap: 1.5rem;
 	margin-inline: auto;
 	width: 100%;
 	max-inline-size: 1110px;
+
+	@media (max-width: 900px) {
+		padding-inline: 1.5rem;
+		gap: 2.5rem;
+	}
 `;
 export default App;

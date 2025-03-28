@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import jobData from "../data.json";
 
-export type JobType = {
+export interface JobType {
 	id: number;
 	company: string;
 	logo: string;
@@ -15,7 +15,7 @@ export type JobType = {
 	location: string;
 	languages: string[];
 	tools: string[];
-};
+}
 
 type JobStore = {
 	jobs: JobType[];
