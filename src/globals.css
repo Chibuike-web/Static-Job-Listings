@@ -22,9 +22,14 @@ button {
 	background: none;
 	outline: none;
 	border: none;
+	font-family: "League Spartan";
 }
 
 body {
 	font-size: 15px;
 	font-family: "League Spartan";
+}
+
+li {
+	list-style: none;
 }
