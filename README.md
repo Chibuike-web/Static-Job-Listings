@@ -12,13 +12,20 @@ A modern job listings web application built with **React**, **Vite**, and **Styl
 
 ## 🛠 Tech Stack
 
-- **Frontend**: React
-- **Build Tool**: Vite
-- **Styling**: Styled Components
-- **State Management**: Zustand
+- React
+- TypeScript
+- Vite
+- Styled Components
+- Zustand
 
 ## 🎨 Design
 
 The design for this project was sourced from **Frontend Mentor**.
 
 I chose to use **Styled Components** to deepen my understanding of **CSS-in-JS**, exploring its advantages in modular styling, dynamic theming, and component-based architecture.
+
+## 🔮 Future Improvements
+
+- ✨ **Add animations and transitions** using **Motion** for a smoother UI experience.
+- 🔍 **Implement job filtering functionality** to dynamically sort and search for listings.
+- 📊 **Fetch real job data from an API** instead of static JSON data.
