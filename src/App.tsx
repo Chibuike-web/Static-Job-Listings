@@ -22,6 +22,7 @@ function App() {
 
 		const newFilters = [...activeFilters, { type: filterType, value }];
 		setActiveFilters(newFilters);
+		console.log(newFilters);
 
 		const newJobLists = allJobs.filter((job) =>
 			newFilters.every(({ type, value }) => {
@@ -41,6 +42,17 @@ function App() {
 			(activeFilter) => !(activeFilter.type === filterType && activeFilter.value === value)
 		);
 		setActiveFilters(updatedList);
+		const newJobLists = allJobs.filter((job) =>
+			updatedList.every(({ type, value }) => {
+				if (type === "role") return job.role === value;
+				if (type === "level") return job.level === value;
+				if (type === "tool") return job.tools?.includes(value);
+				if (type === "language") return job.languages?.includes(value);
+				return false;
+			})
+		);
+
+		setFilteredJobs(newJobLists);
 	};
 
 	return (
@@ -62,7 +74,14 @@ function App() {
 								))}
 							</ListWrapper>
 
-							<ClearButton>Clear</ClearButton>
+							<ClearButton
+								onClick={() => {
+									setActiveFilters([]);
+									setFilteredJobs(allJobs);
+								}}
+							>
+								Clear
+							</ClearButton>
 						</FilterLists>
 					)}
 					{filteredJobs.map(
@@ -133,18 +152,10 @@ const FilterLists = styled.div`
 	padding: 24px;
 	align-items: center;
 	justify-content: space-between;
-	/* position: absolute; */
-	/* top: -120px; */
-	/* left: 50%; */
-	/* transform: translateX(-50%); */
 	z-index: 100;
 	width: 100%;
 	border-radius: 0.5rem;
 	margin-top: -110px;
-
-	@media (max-width: 900px) {
-		width: calc(100% - 48px);
-	}
 `;
 
 const ListWrapper = styled.ul`
@@ -176,6 +187,7 @@ const Button = styled.button`
 
 const ClearButton = styled.button`
 	font-weight: 600;
+	cursor: pointer;
 `;
 
 export default App;

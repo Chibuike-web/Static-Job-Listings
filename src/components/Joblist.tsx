@@ -42,7 +42,7 @@ export default function Joblist({
 						</InfoText>
 					</Aside>
 				</MainContent>
-
+				<Span></Span>
 				<ListContainer>
 					<li>
 						<ListButton type="button" onClick={() => handleClick("role", role)}>
@@ -195,6 +195,17 @@ const BadgeNew = styled.span`
 
 const BadgeFeatured = styled(BadgeNew)`
 	background-color: var(--VeryDarkGrayishCyan);
+`;
+
+const Span = styled.span`
+	width: 100%;
+	display: none;
+	height: 1px;
+	background-color: var(--DarkGrayishCyan);
+
+	@media (max-width: 900px) {
+		display: block;
+	}
 `;
 
 const ListContainer = styled.ul`
